@@ -1,0 +1,14 @@
+{% extends 'NavUsuario.html' %}
+
+{% block content %}
+<h2>Publicaciones</h2>
+
+<form action="{{ url_for('publicaciones') }}" method="post">
+    <ul>
+        {% for pub in fotos %}
+        <input type="text" name="id" value="{{ pub }}">
+        <button type="submit">Like</button>
+        {% endfor %}
+    </ul>
+</form>
+{% endblock %}
