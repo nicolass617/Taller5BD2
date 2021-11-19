@@ -60,10 +60,9 @@ def like(nameUser, url):
 
 def countLikes():
     result = db.read_transaction(lambda tx: list(
-        tx.run("MATCH (p:Person)-[r:like]->(i:Picture) RETURN i.urlFoto AS urlFoto, COUNT(r) AS num_pictures")))
-    for r in result:
-        print(r["urlFoto"] + " => " + str(r["num_pictures"]))
+        tx.run("MATCH (p:Person)-[r:like]->(i:Picture) RETURN i.urlFoto AS urlFoto, COUNT(r) AS num_pictures ORDER BY num_pictures DESC")))
     db.close()
+    return result
 
 def petUser(nameUser):
     result = db.read_transaction(lambda tx: list(

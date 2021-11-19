@@ -2,13 +2,15 @@
 
 {% block content %}
 <h2>Publicaciones</h2>
-
+{% for pub in fotos %}
 <form action="{{ url_for('publicaciones') }}" method="post">
-    <ul>
-        {% for pub in fotos %}
-        <input type="text" name="id" value="{{ pub }}">
-        <button type="submit">Like</button>
-        {% endfor %}
-    </ul>
+    <div>
+        <ul>
+            <input type="text" name="id" value="{{ pub }}" hidden="true">
+            <img src="{{ pub }}" style="width: 300px;">
+            <button type="submit" class="btn btn-lg btn-primary">Like</button>
+        </ul>
+    </div>
 </form>
+{% endfor %}
 {% endblock %}

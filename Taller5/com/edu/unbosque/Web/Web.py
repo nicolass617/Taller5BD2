@@ -5,6 +5,7 @@ app = Flask(__name__)
 app.secret_key = "1234"
 mascotasList = []
 fotos = []
+top = []
 
 @app.route('/inicio')
 def inicio():
@@ -85,6 +86,30 @@ def publicaciones():
         model.like(usr, url)
         return redirect("/Publicaciones")
 
+@app.route('/TopFotos')
+def topfotos():
+    top.clear()
+    list = model.countLikes()
+    l = []
+    if list != None:
+        for i in list:
+            l.append(i)
+        tam = len(l)
+        if tam > 3:
+            tam = 3
+        for i in range(tam):
+            if l[i] not in top:
+                top.append(l[i])
+    return render_template('TopFotos.html', tops=top)
+
+@app.route('/cerrarSecion')
+def cerrarSecion():
+    if 'user' in session:
+        pass
+    mascotasList.clear()
+    fotos.clear()
+    top.clear()
+    return redirect('/inicio')
 
 if __name__ == '__main__':
     app.add_url_rule("/", endpoint="inicio")
